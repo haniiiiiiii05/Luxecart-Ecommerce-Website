@@ -1,38 +1,114 @@
-.App {
-  text-align: center;
+:root {
+  --primary: #123D32;
+  --primary-dark: #0B2D25;
+  --accent: #C49A6C;
+  --background: #FAF8F3;
+  --surface: #FFFFFF;
+  --text: #242B27;
+  --text-muted: #77766F;
+  --border: #E8E1D7;
+  --success: #287A52;
+  --sale: #B9473D;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--text);
+  font-family: "Inter", Arial, sans-serif;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* ================================
+   HOME PLACEHOLDER
+================================ */
+
+.home-page {
+  min-height: calc(100vh - 76px);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.home-placeholder {
+  min-height: 500px;
+
   display: flex;
   flex-direction: column;
+
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+
+  text-align: center;
+
+  padding: 40px;
+
+  background: linear-gradient(135deg,
+      #f9fafb,
+      #eef2ff);
+}
+
+.home-placeholder h1 {
+  font-size: 48px;
+  font-weight: 700;
+
+  margin-bottom: 15px;
+
+  color: #111827;
+}
+
+.home-placeholder p {
+  color: #6b7280;
+
+  font-size: 18px;
+
+  margin-bottom: 30px;
+}
+
+.home-placeholder button {
+  border: none;
+
+  background: #4f46e5;
   color: white;
+
+  padding: 13px 28px;
+
+  border-radius: 8px;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.3s ease;
 }
 
-.App-link {
-  color: #61dafb;
+.home-placeholder button:hover {
+  background: #3730a3;
+  transform: translateY(-2px);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* ================================
+   OTHER PAGES
+================================ */
+
+.page-title {
+  min-height: 500px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0;
+
+  font-size: 40px;
+
+  color: #111827;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+a {
+  color: inherit;
 }

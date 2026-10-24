@@ -1,0 +1,20 @@
+@import "./Login.css";
+
+/* Signup-specific adjustments */
+.auth-page:has(.auth-form-wrap) .auth-form-wrap {
+    max-width: 450px;
+}
+
+.auth-page:has(.auth-form-wrap) .auth-subtitle {
+    margin-bottom: 25px;
+}
+
+.auth-page:has(.auth-form-wrap) .auth-form {
+    gap: 17px;
+}
+
+@media (max-width: 650px) {
+    .auth-page:has(.auth-form-wrap) .auth-form {
+        gap: 19px;
+    }
+}
