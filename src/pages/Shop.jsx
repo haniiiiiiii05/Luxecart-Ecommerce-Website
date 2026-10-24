@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
     FaSearch,
@@ -16,148 +16,13 @@ import { useProducts } from "../context/ProductContext";
 
 const categories = ["All", "Men", "Women", "Shoes", "Accessories"];
 
-// Sample products: replace these with your actual product data when ready.
-const products = [
-    {
-        id: 1,
-        name: "Classic Everyday Jacket",
-        category: "Men",
-        price: 2499,
-        oldPrice: 3299,
-        image:
-            "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=800&q=85",
-        badge: "BESTSELLER",
-        description: "A versatile jacket designed for effortless everyday style.",
-    },
-    {
-        id: 2,
-        name: "Elegant Women's Handbag",
-        category: "Accessories",
-        price: 1899,
-        oldPrice: 2499,
-        image:
-            "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=800&q=85",
-        badge: "POPULAR",
-        description: "A timeless accessory for everyday essentials.",
-    },
-    {
-        id: 3,
-        name: "Minimal Classic Sneakers",
-        category: "Shoes",
-        price: 2199,
-        oldPrice: 2799,
-        image:
-            "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=85",
-        badge: "NEW ARRIVAL",
-        description: "Comfortable sneakers with a clean, modern look.",
-    },
-    {
-        id: 4,
-        name: "Timeless Women's Outfit",
-        category: "Women",
-        price: 2799,
-        oldPrice: 3499,
-        image:
-            "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=800&q=85",
-        badge: "TRENDING",
-        description: "An elegant outfit for everyday and special occasions.",
-    },
-    {
-        id: 5,
-        name: "Modern Casual Shirt",
-        category: "Men",
-        price: 1299,
-        oldPrice: 1699,
-        image:
-            "https://images.unsplash.com/photo-1603252109303-2751441dd157?auto=format&fit=crop&w=800&q=85",
-        badge: "",
-        description: "A versatile shirt that pairs easily with everyday outfits.",
-    },
-    {
-        id: 6,
-        name: "Women's Classic Dress",
-        category: "Women",
-        price: 2399,
-        oldPrice: 2999,
-        image:
-            "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=800&q=85",
-        badge: "POPULAR",
-        description: "A classic silhouette with a sophisticated finish.",
-    },
-    {
-        id: 7,
-        name: "Everyday Wristwatch",
-        category: "Accessories",
-        price: 1599,
-        oldPrice: 2199,
-        image:
-            "https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&w=800&q=85",
-        badge: "",
-        description: "A minimal watch to complement your everyday look.",
-    },
-    {
-        id: 8,
-        name: "Premium Casual Shoes",
-        category: "Shoes",
-        price: 1999,
-        oldPrice: 2599,
-        image:
-            "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=800&q=85",
-        badge: "SALE",
-        description: "Everyday footwear designed with comfort in mind.",
-    },
-    {
-        id: 9,
-        name: "Essential Men's T-Shirt",
-        category: "Men",
-        price: 799,
-        oldPrice: 999,
-        image:
-            "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=85",
-        badge: "",
-        description: "A wardrobe essential with a clean, relaxed fit.",
-    },
-    {
-        id: 10,
-        name: "Women's Shoulder Bag",
-        category: "Accessories",
-        price: 1699,
-        oldPrice: 2199,
-        image:
-            "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=800&q=85",
-        badge: "NEW ARRIVAL",
-        description: "A practical shoulder bag with an elegant design.",
-    },
-    {
-        id: 11,
-        name: "Elegant Women's Heels",
-        category: "Shoes",
-        price: 2299,
-        oldPrice: 2899,
-        image:
-            "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=800&q=85",
-        badge: "",
-        description: "Elegant footwear for a polished look.",
-    },
-    {
-        id: 12,
-        name: "Women's Casual Top",
-        category: "Women",
-        price: 1199,
-        oldPrice: 1499,
-        image:
-            "https://images.unsplash.com/photo-1551163943-3f6a855d1153?auto=format&fit=crop&w=800&q=85",
-        badge: "",
-        description: "An easy-to-style top for your everyday wardrobe.",
-    },
-];
 
 function Shop() {
     const location = useLocation();
     const navigate = useNavigate();
     const { products } = useProducts();
 
-    const getCategoryFromUrl = () => {
+    const getCategoryFromUrl = useCallback(() => {
         const value = new URLSearchParams(location.search).get("category");
         return categories.some(
             (category) => category.toLowerCase() === value?.toLowerCase()
@@ -166,7 +31,7 @@ function Shop() {
                 (category) => category.toLowerCase() === value?.toLowerCase()
             )
             : "All";
-    };
+    }, [location.search]);
 
     const [selectedCategory, setSelectedCategory] = useState(getCategoryFromUrl);
     const [searchTerm, setSearchTerm] = useState("");
@@ -175,9 +40,9 @@ function Shop() {
     const [showFilters, setShowFilters] = useState(false);
     const { wishlist, toggleWishlist } = useWishlist();
 
-    React.useEffect(() => {
+    useEffect(() => {
         setSelectedCategory(getCategoryFromUrl());
-    }, [location.search]);
+    }, [getCategoryFromUrl]);
 
     const formatPrice = (price) =>
         new Intl.NumberFormat("en-IN", {
@@ -230,7 +95,7 @@ function Shop() {
         }
 
         return result;
-    }, [selectedCategory, searchTerm, sortBy, priceRange]);
+    }, [products, selectedCategory, searchTerm, sortBy, priceRange]);
 
     const handleCategoryChange = (category) => {
         setSelectedCategory(category);
