@@ -10,7 +10,6 @@ import {
 import {
     FaSearch,
     FaHeart,
-    FaUser,
     FaChevronDown,
     FaShoppingCart,
     FaClipboardList,

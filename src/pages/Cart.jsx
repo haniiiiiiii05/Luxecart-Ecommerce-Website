@@ -17,7 +17,6 @@ const Cart = () => {
         addToCart,
         decreaseQuantity,
         removeFromCart,
-        clearCart,
     } = useCart();
 
     // Calculate subtotal
